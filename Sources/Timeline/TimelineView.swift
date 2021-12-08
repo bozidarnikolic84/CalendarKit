@@ -42,7 +42,7 @@ public final class TimelineView: UIView {
       recalculateEventLayout()
       prepareEventViews()
       allDayView.events = allDayLayoutAttributes.map { $0.descriptor }
-      allDayView.isHidden = allDayLayoutAttributes.count == 0
+      allDayView.isHidden = (allDayLayoutAttributes.count == 0 || style.hideAllDayView)
       allDayView.scrollToBottom()
       
       setNeedsLayout()
@@ -64,7 +64,7 @@ public final class TimelineView: UIView {
   private lazy var nowLine: CurrentTimeIndicator = CurrentTimeIndicator()
   
   private var allDayViewTopConstraint: NSLayoutConstraint?
-  private lazy var allDayView: AllDayView = {
+  public lazy var allDayView: AllDayView = {
     let allDayView = AllDayView(frame: CGRect.zero)
     
     allDayView.translatesAutoresizingMaskIntoConstraints = false
@@ -79,9 +79,7 @@ public final class TimelineView: UIView {
     return allDayView
   }()
   
-  var allDayViewHeight: CGFloat {
-    return allDayView.bounds.height
-  }
+  public var allDayViewHeight: CGFloat  = 0
 
   var style = TimelineStyle()
   private var horizontalEventInset: CGFloat = 3
@@ -232,6 +230,9 @@ public final class TimelineView: UIView {
     style = newStyle
     allDayView.updateStyle(style.allDayStyle)
     nowLine.updateStyle(style.timeIndicator)
+    
+    allDayView.isHidden = newStyle.hideAllDayView
+    self.allDayViewHeight = newStyle.hideAllDayView ? 0 : allDayView.bounds.height
     
     switch style.dateStyle {
       case .twelveHour:
