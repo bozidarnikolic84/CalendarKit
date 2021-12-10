@@ -39,11 +39,6 @@ class CustomCalendarExampleController: DayViewController {
   
   var generatedEvents = [EventDescriptor]()
   var alreadyGeneratedSet = Set<Date>()
-  
-  var colors = [UIColor.blue,
-                UIColor.yellow,
-                UIColor.green,
-                UIColor.red]
 
   private lazy var rangeFormatter: DateIntervalFormatter = {
     let fmt = DateIntervalFormatter()
@@ -95,7 +90,7 @@ class CustomCalendarExampleController: DayViewController {
 
       info.append(rangeFormatter.string(from: event.dateInterval.start, to: event.dateInterval.end))
       event.text = info.reduce("", {$0 + $1 + "\n"})
-      event.color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
+      event.color = .blue
       event.isAllDay = Int(arc4random_uniform(2)) % 2 == 0
       event.lineBreakMode = .byTruncatingTail
 
@@ -170,7 +165,7 @@ class CustomCalendarExampleController: DayViewController {
 
     info.append(rangeFormatter.string(from: event.dateInterval)!)
     event.text = info.reduce("", {$0 + $1 + "\n"})
-    event.color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
+    event.color = .blue
     event.editedEvent = event
 
     return event
