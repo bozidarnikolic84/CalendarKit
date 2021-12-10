@@ -100,6 +100,24 @@ public final class TimelineView: UIView {
   }()
   
   public var allDaySummaryViewHeight: CGFloat = 40.0
+  
+  private var allDayEventViewTopConstraint: NSLayoutConstraint?
+  public lazy var allDayEventView: AllDayEventView = {
+    let allDayEventView = AllDayEventView(frame: CGRect.zero)
+    
+    allDayEventView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(allDayEventView)
+
+    self.allDayEventViewTopConstraint = allDayEventView.topAnchor.constraint(equalTo: topAnchor, constant: 0)
+    self.allDayEventViewTopConstraint?.isActive = true
+
+    allDayEventView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0).isActive = true
+    allDayEventView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0).isActive = true
+
+    return allDayEventView
+  }()
+  
+  public var allDayEventViewHeight: CGFloat = 24.0
 
   var style = TimelineStyle()
   private var horizontalEventInset: CGFloat = 3
@@ -250,6 +268,7 @@ public final class TimelineView: UIView {
     style = newStyle
     allDayView.updateStyle(style.allDayStyle)
     allDaySummaryView.updateStyle(style.allDaySummaryStyle)
+    allDayEventView.updateStyle(style.allDayEventStyle)
     
     nowLine.updateStyle(style.timeIndicator)
     
@@ -402,6 +421,7 @@ public final class TimelineView: UIView {
     layoutNowLine()
     layoutAllDayEvents()
     layoutAllDaySummaryEvents()
+    layoutAllDayEventEvents()
   }
 
   private func layoutNowLine() {
@@ -451,6 +471,11 @@ public final class TimelineView: UIView {
     bringSubviewToFront(allDaySummaryView)
   }
   
+  private func layoutAllDayEventEvents() {
+    //add day view needs to be in front of the nowLine
+    bringSubviewToFront(allDayEventView)
+  }
+  
   /**
    This will keep the allDayView as a staionary view in its superview
    
@@ -467,6 +492,13 @@ public final class TimelineView: UIView {
   public func offsetAllDaySummaryView(by yValue: CGFloat) {
     if let topConstraint = self.allDaySummaryViewTopConstraint {
       topConstraint.constant = yValue
+      layoutIfNeeded()
+    }
+  }
+  
+  public func offsetAllDayEventView(by yValue: CGFloat) {
+    if let topConstraint = self.allDayEventViewTopConstraint {
+      topConstraint.constant = yValue + allDaySummaryViewHeight
       layoutIfNeeded()
     }
   }
