@@ -66,10 +66,12 @@ public struct TimelineStyle {
   public var timeColor = SystemColors.secondaryLabel
   public var separatorColor = SystemColors.systemSeparator
   public var backgroundColor = SystemColors.systemBackground
+  public var backgroundTimeLineView = SystemColors.systemBackground
   public var font = UIFont.boldSystemFont(ofSize: 11)
   public var dateStyle : DateStyle = .system
   public var eventsWillOverlap: Bool = false
   public var hideAllDayView: Bool = true
+  public var hideAllDayEventView: Bool = false
   public var minimumEventDurationInMinutesWhileEditing: Int = 30
   public var splitMinuteInterval: Int = 15
   public var verticalDiff: CGFloat = 50
@@ -103,8 +105,8 @@ public struct AllDaySummaryViewStyle {
 }
 
 public struct AllDayEventViewStyle {
-  public var backgroundColor: UIColor = SystemColors.systemRed
-  public var allDayEventFont = UIFont.systemFont(ofSize: 12.0)
+  public var backgroundColor: UIColor = SystemColors.systemBlue
+  public var allDayEventFont = UIFont.systemFont(ofSize: 11.0)
   public var allDayEventColor: UIColor = SystemColors.label
   public init() {}
 }

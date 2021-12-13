@@ -48,6 +48,9 @@ public final class TimelineView: UIView {
       allDaySummaryView.events = regularLayoutAttributes.map { $0.descriptor }
       allDaySummaryView.date = date
       
+      allDayEventView.events = allDayLayoutAttributes.map { $0.descriptor }
+      allDayEventView.isHidden = (allDayLayoutAttributes.count == 0 || style.hideAllDayEventView)
+      
       setNeedsLayout()
     }
     get {
@@ -117,7 +120,9 @@ public final class TimelineView: UIView {
     return allDayEventView
   }()
   
-  public var allDayEventViewHeight: CGFloat = 24.0
+  public var allDayEventViewHeight: CGFloat {
+    return allDayEventView.allDayEventViewHeight
+  }
 
   var style = TimelineStyle()
   private var horizontalEventInset: CGFloat = 3
@@ -287,7 +292,7 @@ public final class TimelineView: UIView {
         is24hClock = calendar.locale?.uses24hClock() ?? Locale.autoupdatingCurrent.uses24hClock()
     }
     
-    backgroundColor = style.backgroundColor
+    backgroundColor = style.backgroundTimeLineView
     setNeedsDisplay()
   }
   
