@@ -51,6 +51,8 @@ public final class AllDaySummaryView: UIView {
     stack.backgroundColor = .clear
     stack.isLayoutMarginsRelativeArrangement = true
     stack.layoutMargins = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 10)
+    stack.layer.borderColor = UIColor.init(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).cgColor
+    stack.layer.borderWidth = 1
     stack.addArrangedSubview(dateLabel)
     stack.addArrangedSubview(timeLabel)
     return stack
@@ -107,6 +109,8 @@ public final class AllDaySummaryView: UIView {
   public func updateStyle(_ newStyle: AllDaySummaryViewStyle) {
     style = newStyle
     backgroundColor = style.backgroundColor
+    stackView.layer.borderColor = style.borderColor.cgColor
+    stackView.layer.borderWidth = style.borderWidth
     dateLabel.font = style.dateLabelFont
     dateLabel.textColor = style.dateLabelColor
     timeLabel.font = style.timeLabelFont

@@ -101,12 +101,16 @@ public struct AllDaySummaryViewStyle {
   public var dateLabelColor: UIColor = SystemColors.label
   public var timeLabelFont = UIFont.systemFont(ofSize: 12.0)
   public var timeLabelColor: UIColor = SystemColors.label
+  public var borderColor: UIColor = SystemColors.systemGray4
+  public var borderWidth: CGFloat = 1.0
   public init() {}
 }
 
 public struct AllDayEventViewStyle {
-  public var backgroundColor: UIColor = SystemColors.systemBlue
+  public var backgroundColor: UIColor = SystemColors.systemGray4
   public var allDayEventFont = UIFont.systemFont(ofSize: 11.0)
   public var allDayEventColor: UIColor = SystemColors.label
+  public var borderColor: UIColor = SystemColors.systemGray4
+  public var borderWidth: CGFloat = 1.0
   public init() {}
 }

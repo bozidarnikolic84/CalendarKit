@@ -31,6 +31,8 @@ public final class AllDayEventView: UIView {
     stack.isLayoutMarginsRelativeArrangement = true
     stack.layoutMargins = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
     stack.spacing = 5
+    stack.layer.borderColor = UIColor.init(red: 0.8, green: 0.8, blue: 0.8, alpha: 0.8).cgColor
+    stack.layer.borderWidth = 1
     return stack
   }()
   
@@ -103,6 +105,8 @@ public final class AllDayEventView: UIView {
   public func updateStyle(_ newStyle: AllDayEventViewStyle) {
     style = newStyle
     backgroundColor = style.backgroundColor
+    stackView.layer.borderColor = style.borderColor.cgColor
+    stackView.layer.borderWidth = style.borderWidth
 
     for label in stackView.arrangedSubviews {
       if label is UILabel {
