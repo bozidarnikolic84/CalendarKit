@@ -136,5 +136,4 @@ public final class AllDaySummaryView: UIView {
     
     return "\(hoursString):\(minutesString):\(secondsString)"
   }
-  
 }
