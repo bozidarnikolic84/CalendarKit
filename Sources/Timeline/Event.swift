@@ -1,6 +1,14 @@
 import UIKit
 
 public final class Event: EventDescriptor {
+  
+  public var timeLabelText: String = ""
+  public var timeLabelfont: UIFont = UIFont.systemFont(ofSize: 12)
+  public var timeLabelTextColor: UIColor = SystemColors.label
+  public var symbolLabelText: String = ""
+  public var symbolLabelfont: UIFont = UIFont.systemFont(ofSize: 12)
+  public var symbolLabelTextColor: UIColor = SystemColors.label
+  
   public var dateInterval = DateInterval()
   public var isAllDay = false
   public var text = ""
@@ -34,6 +42,10 @@ public final class Event: EventDescriptor {
     cloned.backgroundColor = backgroundColor
     cloned.textColor = textColor
     cloned.userInfo = userInfo
+    cloned.timeLabelText = timeLabelText
+    cloned.symbolLabelText = symbolLabelText
+    cloned.timeLabelTextColor = timeLabelTextColor
+    cloned.symbolLabelTextColor = symbolLabelTextColor
     cloned.editedEvent = self
     return cloned
   }

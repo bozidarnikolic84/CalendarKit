@@ -3,9 +3,12 @@ import UIKit
 open class EventView: UIView {
   public var descriptor: EventDescriptor?
   public var color = SystemColors.label
+  
+  private let stackViewMaxHeight: CGFloat = 20.0
+  private var stackViewHeight: CGFloat = 0.0
 
   public var contentHeight: CGFloat {
-    return textView.frame.height
+    return (textView.frame.height + stackView.frame.height)
   }
 
   public lazy var textView: UITextView = {
@@ -15,6 +18,37 @@ open class EventView: UIView {
     view.isScrollEnabled = false
     return view
   }()
+  
+  public lazy var stackView: UIStackView = {
+    let stack = UIStackView()
+    stack.distribution = .equalSpacing
+    stack.axis = .horizontal
+    stack.backgroundColor = .clear
+    stack.isLayoutMarginsRelativeArrangement = true
+    stack.layoutMargins = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
+    stack.addArrangedSubview(symbolLabel)
+    stack.addArrangedSubview(timeLabel)
+    return stack
+  }()
+  
+  public lazy var timeLabel: UILabel = {
+    let label = UILabel()
+    label.textAlignment = .right
+    return label
+  }()
+  
+  public lazy var symbolLabel: UILabel = {
+    let label = UILabel()
+    label.textAlignment = .left
+    return label
+  }()
+  
+//  public var imageView: UIImageView = {
+//    let image = UIImageView()
+//    image.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+//    return image
+//  }()
+  
 
   /// Resize Handle views showing up when editing the event.
   /// The top handle has a tag of `0` and the bottom has a tag of `1`
@@ -33,8 +67,10 @@ open class EventView: UIView {
   private func configure() {
     clipsToBounds = false
     color = tintColor
-    addSubview(textView)
     
+    addSubview(textView)
+    addSubview(stackView)
+
     for (idx, handle) in eventResizeHandles.enumerated() {
       handle.tag = idx
       addSubview(handle)
@@ -48,6 +84,12 @@ open class EventView: UIView {
       textView.text = event.text
       textView.textColor = event.textColor
       textView.font = event.font
+      timeLabel.text = event.timeLabelText
+      timeLabel.textColor = event.timeLabelTextColor
+      timeLabel.font = event.timeLabelfont
+      symbolLabel.text = event.symbolLabelText
+      symbolLabel.textColor = event.symbolLabelTextColor
+      symbolLabel.font = event.symbolLabelfont
     }
     if let lineBreakMode = event.lineBreakMode {
       textView.textContainer.lineBreakMode = lineBreakMode
@@ -119,19 +161,35 @@ open class EventView: UIView {
 
   override open func layoutSubviews() {
     super.layoutSubviews()
+    
+    if bounds.height < 40 {
+      stackViewHeight = bounds.height - 15
+    } else {
+      stackViewHeight = stackViewMaxHeight
+    }
+    
+    
     textView.frame = {
         if UIView.userInterfaceLayoutDirection(for: semanticContentAttribute) == .rightToLeft {
-            return CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width - 3, height: bounds.height)
+            return CGRect(x: bounds.minX, y: bounds.minY, width: bounds.width - 3, height: bounds.height - stackViewHeight)
         } else {
-            return CGRect(x: bounds.minX + 3, y: bounds.minY, width: bounds.width - 3, height: bounds.height)
+            return CGRect(x: bounds.minX + 3, y: bounds.minY, width: bounds.width - 3, height: bounds.height - stackViewHeight)
         }
     }()
+    
+   
+    stackView.frame = {
+      return CGRect(x: bounds.minX, y: textView.frame.height, width: bounds.width - 3, height: stackViewHeight)
+    }()
+    
     if frame.minY < 0 {
       var textFrame = textView.frame;
       textFrame.origin.y = frame.minY * -1;
       textFrame.size.height += frame.minY;
       textView.frame = textFrame;
+      stackView.frame = textFrame;
     }
+    print(bounds.height)
     let first = eventResizeHandles.first
     let last = eventResizeHandles.last
     let radius: CGFloat = 40

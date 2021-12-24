@@ -93,7 +93,8 @@ class CustomCalendarExampleController: DayViewController {
       event.color = .blue
       event.isAllDay = Int(arc4random_uniform(2)) % 2 == 0
       event.lineBreakMode = .byTruncatingTail
-
+      event.timeLabelText = "32:14:21"
+      event.symbolLabelText = "$"
       events.append(event)
       
       let nextOffset = Int.random(in: 40 ... 250)
