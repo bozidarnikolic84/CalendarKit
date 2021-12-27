@@ -6,6 +6,7 @@ open class EventView: UIView {
   
   private let stackViewMaxHeight: CGFloat = 20.0
   private var stackViewHeight: CGFloat = 0.0
+  private let stackViewSpace: CGFloat = 3.0
 
   public var contentHeight: CGFloat {
     return (textView.frame.height + stackView.frame.height)
@@ -21,13 +22,21 @@ open class EventView: UIView {
   
   public lazy var stackView: UIStackView = {
     let stack = UIStackView()
-    stack.distribution = .equalSpacing
+    stack.distribution = .fill
     stack.axis = .horizontal
     stack.backgroundColor = .clear
     stack.isLayoutMarginsRelativeArrangement = true
     stack.layoutMargins = UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10)
-    stack.addArrangedSubview(symbolLabel)
+    stack.spacing = stackViewSpace
+
+    stack.addArrangedSubview(additionalButton1)
+    stack.addArrangedSubview(additionalButton2)
+    stack.addArrangedSubview(additionalButton3)
+    stack.addArrangedSubview(additionalButton4)
+    stack.addArrangedSubview(additionalButton5)
+    stack.addArrangedSubview(UIStackView())
     stack.addArrangedSubview(timeLabel)
+    
     return stack
   }()
   
@@ -37,17 +46,30 @@ open class EventView: UIView {
     return label
   }()
   
-  public lazy var symbolLabel: UILabel = {
-    let label = UILabel()
-    label.textAlignment = .left
-    return label
+  public lazy var additionalButton1: UIButton = {
+    let button = UIButton()
+    return button
   }()
   
-//  public var imageView: UIImageView = {
-//    let image = UIImageView()
-//    image.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-//    return image
-//  }()
+  public lazy var additionalButton2: UIButton = {
+    let button = UIButton()
+    return button
+  }()
+  
+  public lazy var additionalButton3: UIButton = {
+    let button = UIButton()
+    return button
+  }()
+  
+  public lazy var additionalButton4: UIButton = {
+    let button = UIButton()
+    return button
+  }()
+  
+  public lazy var additionalButton5: UIButton = {
+    let button = UIButton()
+    return button
+  }()
   
 
   /// Resize Handle views showing up when editing the event.
@@ -81,15 +103,38 @@ open class EventView: UIView {
     if let attributedText = event.attributedText {
       textView.attributedText = attributedText
     } else {
+      
       textView.text = event.text
       textView.textColor = event.textColor
       textView.font = event.font
       timeLabel.text = event.timeLabelText
       timeLabel.textColor = event.timeLabelTextColor
       timeLabel.font = event.timeLabelfont
-      symbolLabel.text = event.symbolLabelText
-      symbolLabel.textColor = event.symbolLabelTextColor
-      symbolLabel.font = event.symbolLabelfont
+
+      additionalButton1.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
+      additionalButton1.setTitle(event.additionalButton1Text, for: .normal)
+      additionalButton1.setImage(event.additionalButton1Image, for: .normal)
+      additionalButton1.addWidthConstraint(event.additionalButton1Width)
+      
+      additionalButton2.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
+      additionalButton2.setTitle(event.additionalButton2Text, for: .normal)
+      additionalButton2.setImage(event.additionalButton2Image, for: .normal)
+      additionalButton2.addWidthConstraint(event.additionalButton2Width)
+      
+      additionalButton3.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
+      additionalButton3.setTitle(event.additionalButton3Text, for: .normal)
+      additionalButton3.setImage(event.additionalButton3Image, for: .normal)
+      additionalButton3.addWidthConstraint(event.additionalButton3Width)
+      
+      additionalButton4.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
+      additionalButton4.setTitle(event.additionalButton4Text, for: .normal)
+      additionalButton4.setImage(event.additionalButton4Image, for: .normal)
+      additionalButton4.addWidthConstraint(event.additionalButton4Width)
+      
+      additionalButton5.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
+      additionalButton5.setTitle(event.additionalButton5Text, for: .normal)
+      additionalButton5.setImage(event.additionalButton5Image, for: .normal)
+      additionalButton5.addWidthConstraint(event.additionalButton5Width)
     }
     if let lineBreakMode = event.lineBreakMode {
       textView.textContainer.lineBreakMode = lineBreakMode
@@ -189,7 +234,7 @@ open class EventView: UIView {
       textView.frame = textFrame;
       stackView.frame = textFrame;
     }
-    print(bounds.height)
+
     let first = eventResizeHandles.first
     let last = eventResizeHandles.last
     let radius: CGFloat = 40
@@ -227,5 +272,41 @@ open class EventView: UIView {
       let rect = bounds.insetBy(dx: dx, dy: dx)
       layer.shadowPath = UIBezierPath(rect: rect).cgPath
     }
+  }
+}
+
+extension UIView {
+    
+    public func removeAllConstraints() {
+        var _superview = self.superview
+        
+        while let superview = _superview {
+            for constraint in superview.constraints {
+                
+                if let first = constraint.firstItem as? UIView, first == self {
+                    superview.removeConstraint(constraint)
+                }
+                
+                if let second = constraint.secondItem as? UIView, second == self {
+                    superview.removeConstraint(constraint)
+                }
+            }
+            
+            _superview = superview.superview
+        }
+        
+        self.removeConstraints(self.constraints)
+        self.translatesAutoresizingMaskIntoConstraints = true
+    }
+  
+  public func addWidthConstraint(_ width: CGFloat) {
+    let constraintButtonPlayWidth = NSLayoutConstraint (item: self,
+                                                        attribute: .width,
+                                                        relatedBy: .equal,
+                                                        toItem: nil,
+                                                        attribute: .notAnAttribute,
+                                                        multiplier: 1,
+                                                        constant: width)
+    self.addConstraint(constraintButtonPlayWidth)
   }
 }

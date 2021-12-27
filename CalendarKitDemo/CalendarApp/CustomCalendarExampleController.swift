@@ -94,7 +94,10 @@ class CustomCalendarExampleController: DayViewController {
       event.isAllDay = Int(arc4random_uniform(2)) % 2 == 0
       event.lineBreakMode = .byTruncatingTail
       event.timeLabelText = "32:14:21"
-      event.symbolLabelText = "$"
+      event.additionalButton1Image = UIImage(named: "tag-active-blue")!
+      event.additionalButton1Width = 15
+      event.additionalButton2Image = UIImage(named: "lockExpense")!
+      event.additionalButton2Width = 15
       events.append(event)
       
       let nextOffset = Int.random(in: 40 ... 250)
