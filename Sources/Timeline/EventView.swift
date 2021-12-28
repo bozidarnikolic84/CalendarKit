@@ -112,23 +112,27 @@ open class EventView: UIView {
     additionalButton1.setTitle(event.additionalButton1Text, for: .normal)
     additionalButton1.setTitleColor(event.additionalButton1TextColor, for: .normal)
     additionalButton1.setImage(event.additionalButton1Image, for: .normal)
+    additionalButton1.titleLabel?.font = event.additionalButton1Font
     additionalButton1.addWidthConstraint(event.additionalButton1Width)
     
     additionalButton2.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
     additionalButton2.setTitle(event.additionalButton2Text, for: .normal)
     additionalButton2.setTitleColor(event.additionalButton2TextColor, for: .normal)
+    additionalButton2.titleLabel?.font = event.additionalButton2Font
     additionalButton2.setImage(event.additionalButton2Image, for: .normal)
     additionalButton2.addWidthConstraint(event.additionalButton2Width)
     
     additionalButton3.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
     additionalButton3.setTitle(event.additionalButton3Text, for: .normal)
     additionalButton3.setTitleColor(event.additionalButton3TextColor, for: .normal)
+    additionalButton3.titleLabel?.font = event.additionalButton3Font
     additionalButton3.setImage(event.additionalButton3Image, for: .normal)
     additionalButton3.addWidthConstraint(event.additionalButton3Width)
     
     additionalButton4.constraints.first { $0.firstAnchor == widthAnchor }?.isActive = false
     additionalButton4.setTitle(event.additionalButton4Text, for: .normal)
     additionalButton4.setTitleColor(event.additionalButton4TextColor, for: .normal)
+    additionalButton4.titleLabel?.font = event.additionalButton4Font
     additionalButton4.setImage(event.additionalButton4Image, for: .normal)
     additionalButton4.addWidthConstraint(event.additionalButton4Width)
     
@@ -136,6 +140,7 @@ open class EventView: UIView {
     additionalButton5.setTitle(event.additionalButton5Text, for: .normal)
     additionalButton5.setTitleColor(event.additionalButton5TextColor, for: .normal)
     additionalButton5.setImage(event.additionalButton5Image, for: .normal)
+    additionalButton5.titleLabel?.font = event.additionalButton5Font
     additionalButton5.addWidthConstraint(event.additionalButton5Width)
     
     timeLabel.text = event.timeLabelText

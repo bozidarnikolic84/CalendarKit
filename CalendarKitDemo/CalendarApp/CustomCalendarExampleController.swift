@@ -98,6 +98,7 @@ class CustomCalendarExampleController: DayViewController {
       event.additionalButton1Text = "$"
       event.additionalButton1TextColor = .blue
       event.additionalButton1Width = 15
+      event.additionalButton1Font = UIFont.systemFont(ofSize: 10)
 //      event.additionalButton2Image = UIImage(named: "lockExpense")!
 //      event.additionalButton2Width = 15
       events.append(event)
