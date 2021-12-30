@@ -6,7 +6,6 @@ target 'CalendarApp' do
   use_frameworks!
 
   # Pods for CalendarApp
-#  pod 'CalendarKit', :git => 'https://github.com/bozidarnikolic84/CalendarKit.git'
-  pod 'CalendarKit', :path => '../'
+  pod 'CalendarKit', :git => 'https://github.com/bozidarnikolic84/CalendarKit.git'
 
 end

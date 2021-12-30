@@ -91,7 +91,8 @@ class CustomCalendarExampleController: DayViewController {
       info.append(rangeFormatter.string(from: event.dateInterval.start, to: event.dateInterval.end))
 //      event.text = info.reduce("", {$0 + $1 + "\n"})
       event.attributedText = NSAttributedString(string: "test", attributes:[NSAttributedString.Key.foregroundColor: UIColor.red, NSAttributedString.Key.backgroundColor: UIColor.yellow])
-      event.color = .blue
+      event.backgroundColor = .cyan
+//      event.color = .red
       event.isAllDay = Int(arc4random_uniform(2)) % 2 == 0
       event.lineBreakMode = .byTruncatingTail
       event.timeLabelText = "32:14:21"
